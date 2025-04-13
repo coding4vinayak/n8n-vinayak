@@ -24,18 +24,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22' # or version required by N8N
+          node-version: '20.15.0'  # or use '22' if you confirmed it works
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install pnpm
+        run: npm install -g pnpm@10.2.1
 
-      - name: (Optional) Build the project
-        run: npm run build
-        # uncomment only if your project needs building
+      - name: Install dependencies with pnpm
+        run: pnpm install
+
+      - name: Build project with pnpm
+        run: pnpm run build
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: n88n # Replace this
+          app-name: n88n  # Replace this with your Azure Web App name
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
